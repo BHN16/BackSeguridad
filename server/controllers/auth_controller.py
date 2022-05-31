@@ -8,8 +8,9 @@ auth = Blueprint('auth', __name__, url_prefix='/auth')
 
 @auth.route("/", methods=["POST"])
 def signup_user():
-    user_req = SignupRequest(request.json).getObject()
-    if user_req == {}:
+    user_req = SignupRequest(request.json)
+    
+    if user_req.getObject() == None:
         err_msg = {"Error": "Bad signup resquest params" }
         return response(err_msg, 400)
 

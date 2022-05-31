@@ -1,7 +1,7 @@
 
 class BaseRequest:
     def __init__(self, request_params: dict):
-        self.dictio = {}
+        self.data = {}
         self.module_attrs = vars(self.__class__)["__annotations__"]
         self.process_attrs(request_params)
 
@@ -14,21 +14,23 @@ class BaseRequest:
         if req_pars.keys() == self.module_attrs.keys():
             for k, converter in self.module_attrs.items():
                 try:
-                    self.dictio[k] = converter(req_pars[k])
+                    self.data[k] = converter(req_pars[k])
                 except:
                     #print(type(req_pars[k]), type(converter))
                     if type(req_pars[k]) == type(converter):
-                        self.dictio[k] = req_pars[k]
+                        self.data[k] = req_pars[k]
                     else:
-                        self.dictio = {}
+                        self.data = {}
                         return
                 #print(k, req_pars[k])
     
     
     def asdict(self):
-        return self.dictio
+        return self.data
 
     def getObject(self):
-        return self.asdict()
+        if self.data == {}:
+            return None
+        return self.data
     
     # def __dict__(self): return 

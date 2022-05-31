@@ -1,5 +1,6 @@
 from dataclasses import dataclass, field
 from datetime import datetime
+from typing import Any
 
 @dataclass
 class UserModel:
@@ -8,5 +9,5 @@ class UserModel:
     password: str = field(default="", repr=False)
     created_at: str = field(default=datetime.utcnow().isoformat())
 
-    def getModel(self):
+    def getDocument(self) -> dict[str, Any]:
         return self.__dict__

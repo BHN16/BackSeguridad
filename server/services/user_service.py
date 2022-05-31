@@ -1,17 +1,15 @@
 from ..models.user_model import UserModel
+from ..models.signup_request import SignupRequest
 from ..extensions import mongo
 from ..utils import hashPwdAndSalt
 
 users_db = mongo.db.users
 
-def createUser(user_dict: dict):
-    user = UserModel()
+def createUser(signup: SignupRequest):
+    user: UserModel = signup.getUser()
 
-    hashedPwd = hashPwdAndSalt(user_dict["password"], "asdf")
-    user.username = user_dict["username"]
-    user.email = user_dict["email"]
+    hashedPwd = hashPwdAndSalt(user.password, "asdf")
     user.password = hashedPwd
 
-    users_db.insert_one(user.getModel())
-
+    users_db.insert_one(user.getDocument())
     return user
