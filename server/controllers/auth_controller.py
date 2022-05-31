@@ -1,7 +1,7 @@
 from flask import Blueprint, request
-from models.signup_request import SignupRequest
-import services.user_service as userService
-from utils import response
+from ..models.signup_request import SignupRequest
+from ..services import user_service
+from ..utils import response
 
 auth = Blueprint('auth', __name__, url_prefix='/auth')
 
@@ -13,5 +13,5 @@ def signup_user():
         err_msg = {"Error": "Bad signup resquest params" }
         return response(err_msg, 400)
 
-    user = userService.createUser(user_req)
-    return response(user, 200)
+    user_res = user_service.createUser(user_req)
+    return response(user_res, 200)

@@ -1,6 +1,6 @@
 # Model for incoming user signup requests
 
-from models.base_request import BaseRequest
+from ..models.base_request import BaseRequest
 
 class SignupRequest(BaseRequest):
     username: str

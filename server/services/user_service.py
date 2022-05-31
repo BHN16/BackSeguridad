@@ -1,6 +1,6 @@
-from models.user_model import UserModel
-from extensions import mongo
-from utils import hashPwdAndSalt
+from ..models.user_model import UserModel
+from ..extensions import mongo
+from ..utils import hashPwdAndSalt
 
 users_db = mongo.db.users
 
