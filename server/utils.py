@@ -1,5 +1,5 @@
 from cryptography.hazmat.primitives import hashes
-from flask import Response
+from flask import Response, make_response
 from bson import json_util
 import os
 
@@ -25,4 +25,6 @@ def hashPwdAndSalt(pwd: str, salt: str):
 def response(msg: object, code: int):
     try: res = json_util.dumps(msg)
     except: res = json_util.dumps(msg.__dict__)
-    return Response(res, mimetype="aplication/json", status=code)
+    res = make_response(res, code)
+    res.headers["content-type"] = "application/json"
+    return res
