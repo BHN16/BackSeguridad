@@ -9,5 +9,5 @@ class UserModel:
     password: str = field(default="", repr=False)
     created_at: str = field(default=datetime.utcnow().isoformat())
 
-    def getDocument(self) -> dict[str, Any]:
+    def getDocument(self):
         return self.__dict__
