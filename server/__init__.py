@@ -9,6 +9,8 @@ mongo.init_app(app)
 # import controllers
 from .controllers.init_controller import inital
 from .controllers.auth_controller import auth
+from .controllers.test_controller import test_mod
 
 app.register_blueprint(inital)
 app.register_blueprint(auth)
+app.register_blueprint(test_mod)
