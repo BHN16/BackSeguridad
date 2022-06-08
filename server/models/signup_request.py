@@ -7,7 +7,6 @@ class SignupRequest(BaseRequest):
     username: str
     email: str
     password: str
-    color: str
 
     def __init__(self, req_pars: dict):
         super().__init__(req_pars)
