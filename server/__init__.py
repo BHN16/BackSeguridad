@@ -2,7 +2,7 @@ from flask import Flask, jsonify, request
 from .extensions import mongo
 
 app = Flask(__name__)
-app.config["MONGO_URI"] = "mongodb://localhost:27017/pass_manager"
+app.config["MONGO_URI"] = "mongodb+srv://security:5gLq2FBzxRi2hxb@datastore.4tmh1zo.mongodb.net/pass_manager?retryWrites=true&w=majority"
 
 mongo.init_app(app)
 
