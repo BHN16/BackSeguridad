@@ -7,7 +7,7 @@ def genSalt():
     return os.urandom(16)
 
 def generate_password(pwd: str):
-    return generate_password_hash(pwd, method='pbkdf2:sha256:10')
+    return generate_password_hash(pwd, method='sha256')
 
 def check_password(hashed_pwd: str, _pwd: str):
     return check_password_hash(hashed_pwd, _pwd)

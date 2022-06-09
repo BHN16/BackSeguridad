@@ -27,7 +27,7 @@ def login_user():
     
     if login_req.getObject() == None:
         err_msg = {"Error": "Bad login resquest params" }
-        return response(err_msg, 400)
+        return response(err_msg, 401)
 
     user = user_service.validateUser(login_req)
     if not user:
