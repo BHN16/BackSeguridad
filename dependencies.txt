@@ -4,6 +4,7 @@ colorama==0.4.4
 cryptography==37.0.2
 dnspython==2.2.1
 Flask==2.1.2
+Flask-Cors==3.0.10
 Flask-PyMongo==2.3.0
 importlib-metadata==4.11.4
 itsdangerous==2.1.2
@@ -11,5 +12,6 @@ Jinja2==3.1.2
 MarkupSafe==2.1.1
 pycparser==2.21
 pymongo==4.1.1
+six==1.16.0
 Werkzeug==2.1.2
 zipp==3.8.0
