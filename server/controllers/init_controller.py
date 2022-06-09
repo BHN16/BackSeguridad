@@ -1,6 +1,6 @@
 from flask import Blueprint, request
 from ..services import user_service
-from ..utils import response, hashPwdAndSalt
+from ..utils import response, generate_password
 
 inital = Blueprint("init", __name__)
 
@@ -13,7 +13,7 @@ def create_test_user():
     user = {
         "username": "test_user",
         "email": "test_user@pass.com",
-        "password": hashPwdAndSalt("123456", "asdf")
+        "password": generate_password("123456")
     }
     user_service.create(user)
     return response({"msg": "Test user created", "user": user}, 200)

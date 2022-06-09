@@ -3,7 +3,7 @@ from ..models.login_request import LoginRequest
 from ..models.user_model import UserModel
 from ..models.signup_request import SignupRequest
 from ..extensions import mongo
-from ..utils import hashPwdAndSalt
+from ..utils import generate_password, check_password
 
 users_db = mongo.db.users
 attrs = ['username', 'email']
@@ -31,7 +31,7 @@ def create(user: dict):
 def createUser(signup: SignupRequest):
     user: UserModel = signup.getUser()
 
-    hashedPwd = hashPwdAndSalt(user.password, "asdf")
+    hashedPwd = generate_password(user.password)
     user.password = hashedPwd
 
     create(user.getDocument())
@@ -42,8 +42,7 @@ def validateUser(login: LoginRequest):
     user = findByEmail(login.getEmail())
     if not user: return None
 
-    hashedPwd = hashPwdAndSalt(login.getPassword(), "asdf")
-    if user["password"] == hashedPwd:
+    if check_password(user["password"], login.getPassword()):
         return user
     return None
 
