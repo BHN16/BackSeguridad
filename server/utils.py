@@ -27,4 +27,5 @@ def response(msg: object, code: int):
     except: res = json_util.dumps(msg.__dict__)
     res = make_response(res, code)
     res.headers["content-type"] = "application/json"
+    res.headers["Access-Control-Allow-Origin"] = "*"
     return res
