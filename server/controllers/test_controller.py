@@ -12,6 +12,8 @@ def get_users():
 @test_mod.route("/user/<id>")
 def get_user(id):
     user = user_service.findOne(id)
+    if not user:
+        return response({"msg": "User not found"}, 400)
     return response({"msg": "Recibido", "user": user}, 200)
 
 @test_mod.route("/user", methods=["POST"])
@@ -22,4 +24,6 @@ def create_user():
 @test_mod.route("/user/<id>", methods=["DELETE"])
 def delete_user(id):
     deleted = user_service.delete(id)
+    if not deleted:
+        return response({"msg": "User not found"}, 400)
     return response({"msg": "Recibido", "Deleted": deleted}, 200)
