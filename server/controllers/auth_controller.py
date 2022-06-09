@@ -2,6 +2,7 @@ from flask import Blueprint, redirect, request, url_for
 
 from ..models.login_request import LoginRequest
 from ..models.signup_request import SignupRequest
+from ..services.jwt_service import *
 from ..services import user_service
 from ..utils import response
 
@@ -33,5 +34,7 @@ def login_user():
         err_msg = {"error": "Invalid email or password" }
         return response(err_msg, 400)
     
-    res = {"msg": "User logged in", "username": user['username']}
+    access_token = generate_token(user)
+
+    res = {"msg": "User logged in", "token": access_token}
     return response(res, 200)
