@@ -1,6 +1,5 @@
-# Model for incoming user signup requests
+# Model for incoming user login requests
 
-import email
 from server.models.user_model import UserModel
 from ..models.base_request import BaseRequest
 
