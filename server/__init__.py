@@ -14,7 +14,9 @@ jwt.init_app(app)
 from .controllers.init_controller import inital
 from .controllers.auth_controller import auth
 from .controllers.test_controller import test_mod
+from .controllers.credential_controller import cred_mod
 
 app.register_blueprint(inital)
 app.register_blueprint(auth)
 app.register_blueprint(test_mod)
+app.register_blueprint(cred_mod)
