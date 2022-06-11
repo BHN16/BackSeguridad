@@ -15,7 +15,8 @@ def user_identity_lookup(user):
 @jwt.user_lookup_loader
 def user_lookup_callback(_jwt_header, jwt_data):
     identity = jwt_data["sub"]
-    return user_service.findOne(identity)
+    #return user_service.findOne(identity)
+    return identity
 
 
 def generate_token(user: dict, timedelta=None):
