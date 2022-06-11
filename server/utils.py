@@ -1,10 +1,13 @@
 from werkzeug.security import generate_password_hash, check_password_hash
+from bson import json_util, ObjectId
 from flask import make_response
-from bson import json_util
 import os
 
 def genSalt():
     return os.urandom(16)
+
+def valid_id(id):
+    return ObjectId.is_valid(id)
 
 def generate_password(pwd: str):
     return generate_password_hash(pwd, method='sha256')

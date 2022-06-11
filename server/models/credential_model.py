@@ -15,7 +15,7 @@ class CredentialModel:
         return self.__dict__
 
 
-class credentRequest(BaseRequest):
+class CredentRequest(BaseRequest):
     web_address: str
     username: str
     password: str
