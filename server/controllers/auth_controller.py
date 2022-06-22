@@ -26,8 +26,8 @@ def login_user():
     login_req = LoginRequest(request.json)
     
     if login_req.getObject() == None:
-        err_msg = {"Error": "Bad login resquest params" }
-        return response(err_msg, 401)
+        err_msg = {"error": "Bad login request params" }
+        return response(err_msg, 400)
 
     user = user_service.validateUser(login_req)
     if not user:
@@ -36,5 +36,5 @@ def login_user():
     
     access_token = generate_token(user)
 
-    res = {"msg": "User logged in", "token": access_token}
+    res = {"username": user["username"], "token": access_token}
     return response(res, 200)
