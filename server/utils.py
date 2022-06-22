@@ -2,9 +2,13 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from bson import json_util, ObjectId
 from flask import make_response
 import os
+import uuid
 
-def genSalt():
-    return os.urandom(16)
+def genRandom(size: int = 16):
+    return os.urandom(size)
+
+def genUUID():
+    return uuid.uuid4().hex
 
 def valid_id(id):
     return ObjectId.is_valid(id)
