@@ -19,14 +19,20 @@ def findOne(user_id: str, filter: tuple):
     cred = users_db.find_one(
         { "_id": ObjectId(user_id), f"credentials.{key}": value },
         { "credentials": {"$elemMatch": {key: value}} })
-    return cred
+    try: return cred["credentials"][0]
+    except: return None
 
 
 def findByWebsite(user_id: str, web: str):
-    filter = ("web_address", web)
+    filter = ("website", web)
     cred = findOne(user_id, filter)
-    try: return cred["credentials"][0]
-    except: return None
+    return cred
+
+
+def findByCredId(user_id: str, cred_id: str):
+    filter = ("id", cred_id)
+    cred = findOne(user_id, filter)
+    return cred
 
 
 def create(user_id: str, cred: dict):
@@ -37,20 +43,19 @@ def create(user_id: str, cred: dict):
     return result.modified_count
 
 
-def createCredential(user_id: str, credr: CredentRequest):
-    credential: CredentialModel = credr.getCredential()
+def createCredential(user_id: str, cred_req: CredentRequest):
+    credential: CredentialModel = cred_req.getCredential()
 
     valid = create(user_id, credential.getDocument())
     
     if not valid: return None
-    return credential
+    return credential.getDocument()
 
 
-# Delete by website
-def delete(user_id: str, web: str):
+# Delete by credential id
+def delete(user_id: str, cred_id: str):
     if not valid_id(user_id): return None
-    filter = {"_id": ObjectId(user_id)}
     result = users_db.update_one(
         { "_id": ObjectId(user_id) },
-        { "$pull": { "credentials": {"web_address": web} } })
+        { "$pull": { "credentials": {"id": cred_id} } })
     return result.modified_count
