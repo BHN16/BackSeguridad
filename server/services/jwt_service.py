@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import timedelta
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import current_user
 from flask_jwt_extended import jwt_required
@@ -19,8 +19,8 @@ def user_lookup_callback(_jwt_header, jwt_data):
     return identity
 
 
-def generate_token(user: dict, timedelta=None):
-    #if not timedelta: timedelta = datetime
+def generate_token(user: dict, delta=None):
+    if not delta: delta = timedelta(minutes=30)
     id = str(user["_id"])
-    token = create_access_token(identity=id, expires_delta=timedelta)
+    token = create_access_token(identity=id, expires_delta=delta)
     return token
