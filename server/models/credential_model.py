@@ -30,3 +30,14 @@ class CredentRequest(BaseRequest):
         credential.bytes = self.data["bytes"]
         credential.username = self.data["username"]
         return credential
+
+
+class EditCredRequest(BaseRequest):
+    id: str
+    website: str
+    username: str
+    bytes: str
+
+    def __init__(self, req_pars: dict):
+        super().__init__(req_pars)
+        print(self.data)

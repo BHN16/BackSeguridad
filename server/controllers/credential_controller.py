@@ -1,6 +1,6 @@
 from flask import Blueprint, request
 from ..services import credential_service
-from ..models.credential_model import CredentRequest
+from ..models.credential_model import CredentRequest, EditCredRequest
 from ..services import jwt_service as jwt
 from ..utils import response
 
@@ -50,6 +50,26 @@ def create_credential():
     if not res:
         return response({"msg": "Can't resolve operation"}, 400)
     return response({"Created": res}, 200)
+
+
+@cred_mod.route("/cred/", methods=["PUT"])
+@jwt.jwt_required()
+def update_credential():
+    user_id = str(jwt.current_user)
+    edit_cred_req = EditCredRequest(request.json)
+
+    if edit_cred_req.getObject() == None:
+        err_msg = {"error": "Bad credential request params" }
+        return response(err_msg, 400)
+    
+    cred_id = request.json["id"]
+    cred = edit_cred_req.data
+    print(cred)
+    result = credential_service.editCredential(user_id, cred)
+
+    if result == None:
+        return response({"msg": "Resource not found"}, 404)
+    return response({"msg": f"Updated {result}"}, 200)
 
 
 @cred_mod.route("/cred/", methods=["DELETE"])

@@ -52,6 +52,16 @@ def createCredential(user_id: str, cred_req: CredentRequest):
     return credential.getDocument()
 
 
+def editCredential(user_id: str, cred: dict):
+    if not valid_id(user_id): return None
+    result = users_db.update_one(
+        { "_id": ObjectId(user_id) },
+        { "$set": { "credentials.$[elem]": cred } },
+        array_filters=[ { "elem.id": {"$eq": cred["id"]} } ],
+        upsert=False)
+    return result.modified_count
+
+
 # Delete by credential id
 def delete(user_id: str, cred_id: str):
     if not valid_id(user_id): return None
