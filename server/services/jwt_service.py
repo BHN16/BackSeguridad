@@ -20,7 +20,7 @@ def user_lookup_callback(_jwt_header, jwt_data):
 
 
 def generate_token(user: dict, delta=None):
-    if not delta: delta = timedelta(minutes=1)
+    if not delta: delta = timedelta(minutes=5)
     id = str(user["_id"])
     token = create_access_token(identity=id, expires_delta=delta)
     return token
