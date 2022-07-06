@@ -31,6 +31,9 @@ def create(user: dict):
 def createUser(signup: SignupRequest):
     user: UserModel = signup.getUser()
 
+    repeated = findByEmail(user.email)
+    if repeated: return None
+
     hashedPwd = generate_password(user.password)
     user.password = hashedPwd
 

@@ -18,6 +18,9 @@ def signup_user():
         return response(err_msg, 400)
 
     user_res = user_service.createUser(user_req)
+    if not user_res:
+        err_msg = {"error": "Registration failed" }
+        return response(err_msg, 400)
     return response(user_res, 200)
 
 
