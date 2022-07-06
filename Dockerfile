@@ -14,6 +14,10 @@ ENV STATIC_PATH /app/static
 # ENV STATIC_INDEX 1
 ENV STATIC_INDEX 0
 
+# Load secrets for mongo and jwt
+ENV FLASK_JWT_SECRET_KEY ""
+ENV FLASK_MONGO_URI ""
+
 # Add demo app
 ADD . /app
 WORKDIR /app
