@@ -1,30 +1,28 @@
-from cryptography.hazmat.primitives import hashes
-from flask import Response, make_response
-from bson import json_util
+from werkzeug.security import generate_password_hash, check_password_hash
+from bson import json_util, ObjectId
+from flask import make_response
 import os
+import uuid
 
-def genSalt():
-    return os.urandom(16)
+def genRandom(size: int = 16):
+    return os.urandom(size)
 
-def hash(msg: str):
-	digest = hashes.Hash(hashes.SHA1())
-	digest.update(msg.encode("unicode_escape"))
-	return digest.finalize().hex()
+def genUUID():
+    return uuid.uuid4().hex
 
-def iterativeHash(msg: str, n_iter: int = 5):
-    hashed = msg
-    for i in range(n_iter):
-        hashed = hash(hashed)
-    return hashed
+def valid_id(id):
+    return ObjectId.is_valid(id)
 
-def hashPwdAndSalt(pwd: str, salt: str):
-    pt = salt +":"+pwd + ":" + salt
-    hashed_pwd = iterativeHash(pt)
-    return f"{salt}:{hashed_pwd}"
+def generate_password(pwd: str):
+    return generate_password_hash(pwd, method='sha256')
+
+def check_password(hashed_pwd: str, _pwd: str):
+    return check_password_hash(hashed_pwd, _pwd)
 
 def response(msg: object, code: int):
     try: res = json_util.dumps(msg)
     except: res = json_util.dumps(msg.__dict__)
     res = make_response(res, code)
     res.headers["content-type"] = "application/json"
+    res.headers["Access-Control-Allow-Origin"] = "*"
     return res
